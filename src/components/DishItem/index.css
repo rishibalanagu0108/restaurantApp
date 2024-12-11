@@ -2,6 +2,10 @@
   border: 1px solid gray;
   border-radius: 12px;
   justify-content: space-between;
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+  padding: 20px;
 }
 
 .veg-border {
@@ -57,9 +61,11 @@
 .controller-container {
   width: fit-content;
   min-width: 150px;
+  display: flex;
   justify-content: space-between;
   padding: 10px;
   border-radius: 50px;
+  background-color: #734ff4;
 }
 
 .button {
@@ -67,17 +73,14 @@
   border: none;
   outline: none;
   cursor: pointer;
-  color: #fff;
   font-weight: 600;
   font-size: 18px;
-  background-color: blue;
+  background-color: transparent;
 }
 
 .quantity {
   margin: 0 10px;
-  color: #fff;
   font-size: 18px;
-  background-color: #0f0f0f;
 }
 
 .not-availability-text {
@@ -107,4 +110,17 @@
   height: 150px;
   border-radius: 12px;
   align-self: flex-start;
+}
+
+.add-cart {
+  border: 1px solid #734ff4;
+  border-radius: 5px;
+  padding: 12px;
+  font-size: 15px;
+  margin-top: 15px;
+}
+
+.add-cart:hover {
+  background-color: #525252;
+  color: #fff;
 }

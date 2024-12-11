@@ -68,7 +68,11 @@ const DishItem = props => {
           <p className="addon-availability-text">Customizations available</p>
         )}
         {quantity > 0 && (
-          <button type="button" className="button" onClick={onAddCartItem}>
+          <button
+            type="button"
+            className="button add-cart"
+            onClick={onAddCartItem}
+          >
             ADD TO CART
           </button>
         )}
