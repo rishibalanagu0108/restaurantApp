@@ -1,19 +1,14 @@
-import {useState, useContext} from 'react'
+import {useContext} from 'react'
 import {Link} from 'react-router-dom'
-import Cookies from 'js-cookie'
 import {AiOutlineShoppingCart} from 'react-icons/ai'
 
 import CartContext from '../../context/CartContext'
+
 import './index.css'
 
 const Header = props => {
-  const {restaurantName, cartList} = useContext(CartContext)
-
-  const onLogout = () => {
-    const {history} = props
-    Cookies.remove('jwt_token')
-    history.replace('/login')
-  }
+  const {restaurantName} = props
+  const {cartList} = useContext(CartContext)
 
   const renderCartIcon = () => (
     <div className="cart-icon-link">
@@ -35,9 +30,6 @@ const Header = props => {
       </Link>
       <div className="order-container">
         <p className="my-orders-text">My Orders</p>
-        <button type="button" className="logout-btn" onClick={onLogout}>
-          Logout
-        </button>
         {renderCartIcon()}
       </div>
     </header>

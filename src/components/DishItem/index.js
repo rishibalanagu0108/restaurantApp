@@ -7,7 +7,6 @@ import './index.css'
 const DishItem = props => {
   const {dishItem} = props
   const {
-    dishId,
     dishName,
     dishImage,
     dishPrice,

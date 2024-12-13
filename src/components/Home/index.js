@@ -1,17 +1,23 @@
-import {useState, useEffect, useContext} from 'react'
+import {useState, useEffect} from 'react'
 import Loader from 'react-loader-spinner'
 
 import Header from '../Header'
 import DishItem from '../DishItem'
-import CartContext from '../../context/CartContext'
 
 import './index.css'
 
+const apiStatusConstants = {
+  initial: 'INITIAL',
+  loading: 'LOADING',
+  success: 'SUCCESS',
+  failure: 'FAILURE',
+}
+
 const Home = () => {
-  const [isLoading, setLoading] = useState(true)
+  const [isLoading, setLoading] = useState(apiStatusConstants.initial)
   const [response, setResponse] = useState([])
   const [activeCategoryId, setActiveCategoryId] = useState('')
-  const {setRestaurantName} = useContext(CartContext)
+  const [restaurantName, setRestaurantName] = useState('')
 
   const getUpdatedData = tableMenuList =>
     tableMenuList.map(eachMenu => ({
@@ -33,6 +39,7 @@ const Home = () => {
     }))
 
   const fetchRestaurantsApi = async () => {
+    setLoading(apiStatusConstants.loading)
     const apiUrl =
       'https://apis2.ccbp.in/restaurant-app/restaurant-menu-list-details'
     const apiResponse = await fetch(apiUrl)
@@ -41,7 +48,7 @@ const Home = () => {
     setResponse(updatedData)
     setRestaurantName(data[0].restaurant_name)
     setActiveCategoryId(updatedData[0].menuCategoryId)
-    setLoading(false)
+    setLoading(apiStatusConstants.success)
   }
 
   useEffect(() => {
@@ -94,19 +101,31 @@ const Home = () => {
     )
   }
 
-  return isLoading ? (
-    renderSpinner()
-  ) : (
-    <div className="home-background">
-      <Header />
-      <ul className="tab-container">
-        {response.map(eachCategory =>
-          renderTabItem(eachCategory.menuCategoryId, eachCategory.menuCategory),
-        )}
-      </ul>
-      {renderDishes()}
-    </div>
-  )
+  const renderBasedOnApiStatus = () => {
+    switch (isLoading) {
+      case apiStatusConstants.loading:
+        return renderSpinner()
+      case apiStatusConstants.success:
+        return (
+          <div className="home-background">
+            <Header restaurantName={restaurantName} />
+            <ul className="tab-container">
+              {response.map(eachCategory =>
+                renderTabItem(
+                  eachCategory.menuCategoryId,
+                  eachCategory.menuCategory,
+                ),
+              )}
+            </ul>
+            {renderDishes()}
+          </div>
+        )
+      default:
+        return null
+    }
+  }
+
+  return renderBasedOnApiStatus()
 }
 
 export default Home
